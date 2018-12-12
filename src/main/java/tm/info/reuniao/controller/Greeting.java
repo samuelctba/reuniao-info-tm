@@ -9,7 +9,7 @@ public class Greeting {
 	@CrossOrigin(origins = "http://localhost:8080")
 	@GetMapping("/greeting")
 	public String Hello() {
-		return "OLA, Seja bem vindo!";
+		return "OLA, Seja bem vindo!2";
 	}
 
 }
