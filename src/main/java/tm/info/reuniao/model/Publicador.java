@@ -1,18 +1,48 @@
 package tm.info.reuniao.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
+//@Collection(name="publicador")
+@Document(collection = "publicador")
 public class Publicador {
 
-
+    @Id
     private String id;
+
+    @NotNull
+    @Size(min=2, max=30)
     private String email;
+    @NotNull
+//    @Min(18)
     private String primeiroNome;
+    @NotNull
     private String sobreNome;
+    @NotNull
     private String endereco;
+    @NotNull
     private String telefone;
+    @NotNull
     private String dataNascimento;
+    @NotNull
     private String dataBatismo;
     private String outros;
     private String detalhes;
+
+    public Publicador(@NotNull @Size(min = 2, max = 30) String email, @NotNull String primeiroNome, @NotNull String sobreNome, @NotNull String endereco, @NotNull String telefone, @NotNull String dataNascimento, @NotNull String dataBatismo, String outros, String detalhes) {
+        this.email = email;
+        this.primeiroNome = primeiroNome;
+        this.sobreNome = sobreNome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
+        this.dataBatismo = dataBatismo;
+        this.outros = outros;
+        this.detalhes = detalhes;
+    }
 
     public String getEmail() {
         return email;
@@ -84,5 +114,9 @@ public class Publicador {
 
     public void setDetalhes(String detalhes) {
         this.detalhes = detalhes;
+    }
+
+    public String getId() {
+        return id;
     }
 }
