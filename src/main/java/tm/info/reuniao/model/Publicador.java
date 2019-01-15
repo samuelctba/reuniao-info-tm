@@ -1,9 +1,11 @@
 package tm.info.reuniao.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 
 //@Collection(name="publicador")
@@ -11,10 +13,12 @@ import javax.validation.constraints.Size;
 public class Publicador {
 
     @Id
-    private String id;
+    private ObjectId _id;
 
     @NotNull
     @Size(min=2, max=30)
+//    @Pattern(regexp = "^(.+)@(.+)$")
+    @Email(message = "Email should be valid")
     private String email;
     @NotNull
 //    @Min(18)
@@ -26,13 +30,15 @@ public class Publicador {
     @NotNull
     private String telefone;
     @NotNull
-    private String dataNascimento;
+    @Past
+    private LocalDate dataNascimento;
     @NotNull
-    private String dataBatismo;
+    @Past
+    private LocalDate dataBatismo;
     private String outros;
     private String detalhes;
 
-    public Publicador(@NotNull @Size(min = 2, max = 30) String email, @NotNull String primeiroNome, @NotNull String sobreNome, @NotNull String endereco, @NotNull String telefone, @NotNull String dataNascimento, @NotNull String dataBatismo, String outros, String detalhes) {
+    public Publicador(@NotNull @Size(min = 2, max = 30) @Email(message = "Email should be valid") String email, @NotNull String primeiroNome, @NotNull String sobreNome, @NotNull String endereco, @NotNull String telefone, @NotNull @Past LocalDate dataNascimento, @NotNull @Past LocalDate dataBatismo, String outros, String detalhes) {
         this.email = email;
         this.primeiroNome = primeiroNome;
         this.sobreNome = sobreNome;
@@ -84,19 +90,19 @@ public class Publicador {
         this.telefone = telefone;
     }
 
-    public String getDataNascimento() {
+    public @NotNull @Past LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getDataBatismo() {
+    public @NotNull @Past LocalDate getDataBatismo() {
         return dataBatismo;
     }
 
-    public void setDataBatismo(String dataBatismo) {
+    public void setDataBatismo(LocalDate dataBatismo) {
         this.dataBatismo = dataBatismo;
     }
 
@@ -116,7 +122,7 @@ public class Publicador {
         this.detalhes = detalhes;
     }
 
-    public String getId() {
-        return id;
+    public ObjectId getId() {
+        return _id;
     }
 }

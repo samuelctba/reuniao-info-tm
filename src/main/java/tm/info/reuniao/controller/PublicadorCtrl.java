@@ -48,7 +48,7 @@ public class PublicadorCtrl {
         List<Publicador> checkPublicadoor = repositorioPublicador.findByEmail(publicador.getEmail());
         if(checkPublicadoor.isEmpty()) {
             Publicador _publicadores = repositorioPublicador.save(new Publicador(
-                    publicador.getEmail(),
+                    id, publicador.getEmail(),
                     publicador.getPrimeiroNome(),
                     publicador.getSobreNome(),
                     publicador.getEndereco(),
