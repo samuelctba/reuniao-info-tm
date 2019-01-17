@@ -34,8 +34,8 @@ public class PublicadorCtrl {
         System.out.println("Buscar todos os Publicadores...");
 
         List<Publicador> publicadores = new ArrayList<>();
-        repositorioPublicador.findAll().forEach(p->publicadores.add(p));
-//        repositorioPublicador.findAll().forEach(publicadores::add);
+//        repositorioPublicador.findAll().forEach(p->publicadores.add(p));
+        repositorioPublicador.findAll().forEach(publicadores::add);
 
         return publicadores;
     }
