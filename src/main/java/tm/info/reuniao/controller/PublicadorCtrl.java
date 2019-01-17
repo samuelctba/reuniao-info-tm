@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tm.info.reuniao.dao.IPublicadorDao;
+
 import tm.info.reuniao.model.Publicador;
+import tm.info.reuniao.repositorio.IPublicadorRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class PublicadorCtrl {
 
     @Autowired
-    private IPublicadorDao repositorioPublicador;
+    private IPublicadorRepo repositorioPublicador;
 
     //    @GetMapping("/{sobreNome}")
     @RequestMapping(value = "/{sobreNome}", method = RequestMethod.GET)

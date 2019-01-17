@@ -12,7 +12,11 @@ import java.time.LocalDate;
 @Document(collection = "publicador")
 public class Publicador {
 
-    @Id
+    public Publicador() {
+		super();
+	}
+
+	@Id
     private ObjectId _id;
 
     @NotNull

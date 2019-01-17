@@ -1,4 +1,4 @@
-package tm.info.reuniao.model;
+package tm.info.reuniao.config;
 
 public enum ETipoAcesso {
         ADMINISTRADOR,
