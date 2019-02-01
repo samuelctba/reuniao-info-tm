@@ -3,6 +3,7 @@ package tm.info.reuniao.model;
 import javax.validation.constraints.NotNull;
 
 import org.bson.types.ObjectId;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

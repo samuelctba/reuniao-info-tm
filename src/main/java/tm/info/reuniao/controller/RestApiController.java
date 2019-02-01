@@ -6,49 +6,70 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import tm.info.reuniao.model.Publicador;
+import tm.info.reuniao.model.Usuario;
 import tm.info.reuniao.repositorio.IPublicadorServico;
+import tm.info.reuniao.repositorio.IUsuarioServico;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
-public class PublicadorCtrl {
+public class RestApiController {
 
     @Autowired
-    private IPublicadorServico repositorioPublicador;
+    private IPublicadorServico publicadorServico;
+    
+    @Autowired
+	private IUsuarioServico usuarioServico;
+    
+	@RequestMapping(value = "/user/", method = RequestMethod.GET)
+	public List<Usuario> mostrarUsuarios() {
+		return usuarioServico.findAll();
+	}
+
+	@RequestMapping(value = "/user/", method = RequestMethod.POST)
+	// public Usuario cadastrarUsuario(@RequestBody Usuario newUser) {
+	public ResponseEntity<String> cadastrarUsuario(@RequestParam Usuario newUser) {
+
+		Usuario _usuario = usuarioServico
+				.save(new Usuario(newUser.getUsuario(), newUser.getPassword(), newUser.getPerfil()));
+
+		return new ResponseEntity<>("Usuario " + _usuario.get_id() + " foi criado com sucesso!!!", HttpStatus.OK);
+
+	}
+
 
     //    @GetMapping("/{sobreNome}")
-    @RequestMapping(value = "/{sobreNome}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/{sobreNome}", method = RequestMethod.GET)
     public List<Publicador> BuscaPublicador(@PathVariable String sobreNome) {
-        return repositorioPublicador.findBySobreNome(sobreNome);
+        return publicadorServico.findBySobreNome(sobreNome);
     }
     //    @GetMapping("/{sobreNome}")
-    @RequestMapping(value = "/{primeiroNome}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/{primeiroNome}", method = RequestMethod.GET)
     public List<Publicador> BuscaPublicadorPrimeiroNome(@PathVariable String primeiroNome) {
-        return repositorioPublicador.findByPrimeiroNome(primeiroNome);
+        return publicadorServico.findByPrimeiroNome(primeiroNome);
     }
 
-    @GetMapping("/publicadores")
+    @GetMapping("/api/publicadores")
     public List<Publicador> getAllPublicadores() {
         System.out.println("Buscar todos os Publicadores...");
 
         List<Publicador> publicadores = new ArrayList<>();
 //        repositorioPublicador.findAll().forEach(p->publicadores.add(p));
-        repositorioPublicador.findAll().forEach(publicadores::add);
+        publicadorServico.findAll().forEach(publicadores::add);
 
         return publicadores;
     }
 
-    @PostMapping("/publicadores/create")
+    @PostMapping("/api/publicadores/create")
     public ResponseEntity<String> postPublicador(@RequestBody Publicador publicador) {
         System.out.println("Criando Publicador");
         System.out.println(publicador);
 
-        List<Publicador> checkPublicadoor = repositorioPublicador.findByEmail(publicador.getEmail());
+        List<Publicador> checkPublicadoor = publicadorServico.findByEmail(publicador.getEmail());
         if(checkPublicadoor.isEmpty()) {
-            Publicador _publicadores = repositorioPublicador.save(new Publicador(
+            Publicador _publicadores = publicadorServico.save(new Publicador(
                     publicador.getEmail(),
                     publicador.getPrimeiroNome(),
                     publicador.getSobreNome(),
@@ -70,34 +91,34 @@ public class PublicadorCtrl {
 
     }
 
-    @DeleteMapping("/publicadores/{id}")
+    @DeleteMapping("/api/publicadores/{id}")
     public ResponseEntity<String> deletePublicadores(@PathVariable("id") String id) {
         System.out.println("Apagar Publicador com ID = " + id + "...");
 
-        repositorioPublicador.deleteById(id);
+        publicadorServico.deleteById(id);
 
         return new ResponseEntity<>("Publicador " + id + " foi removido com sucesso!!!", HttpStatus.OK);
     }
 
-    @DeleteMapping("/publicadores/deleteall")
+    @DeleteMapping("/api/publicadores/deleteall")
     public ResponseEntity<String> deleteAllPublicadores() {
         System.out.println("Apagar todos os Publicadores...");
 
-        repositorioPublicador.deleteAll();
+        publicadorServico.deleteAll();
 
         return new ResponseEntity<>("Todos os publicadores foram removidos do banco de dados com sucesso!", HttpStatus.OK);
     }
 
-    @GetMapping("publicadores/email/{email}")
+    @GetMapping("/api/publicadores/email/{email}")
     public List<Publicador> findByEmail(@PathVariable String email) {
-        return repositorioPublicador.findByEmail(email);
+        return publicadorServico.findByEmail(email);
     }
 
-    @PutMapping("/publicadores/{id}")
+    @PutMapping("/api/publicadores/{id}")
     public ResponseEntity<Publicador> updatePublicador(@PathVariable("id") String id, @RequestBody Publicador publicador) {
         System.out.println("Atualizar Publicador com ID = " + id + "...");
 
-        Optional<Publicador> publicadorData = repositorioPublicador.findById(id);
+        Optional<Publicador> publicadorData = publicadorServico.findById(id);
 
         if (publicadorData.isPresent()) {
             Publicador _publicador = publicadorData.get();
@@ -110,7 +131,7 @@ public class PublicadorCtrl {
             _publicador.setPrimeiroNome(publicador.getPrimeiroNome());
             _publicador.setSobreNome(publicador.getSobreNome());
             _publicador.setTelefone(publicador.getTelefone());
-            return new ResponseEntity<>(repositorioPublicador.save(_publicador), HttpStatus.OK);
+            return new ResponseEntity<>(publicadorServico.save(_publicador), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
