@@ -6,6 +6,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import tm.info.reuniao.config.ETipoAcesso;
+
 @Document(collection = "usuario")
 public class Usuario {
 
@@ -16,7 +18,7 @@ public class Usuario {
 	@NotNull
 	private String password;
 
-	private Perfil perfil;
+	private ETipoAcesso perfil;
 
 	public String getUsuario() {
 		return usuario;
@@ -34,12 +36,25 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public Perfil getPerfil() {
+	public ObjectId get_id() {
+		return _id;
+	}
+
+	public ETipoAcesso getPerfil() {
 		return perfil;
 	}
 
-	public void setPerfil(Perfil perfil) {
+	public void setPerfil(ETipoAcesso perfil) {
 		this.perfil = perfil;
 	}
+
+	public Usuario(@NotNull String usuario, @NotNull String password, ETipoAcesso perfil) {
+		super();
+		this.usuario = usuario;
+		this.password = password;
+		this.perfil = perfil;
+	}
+	
+
 
 }

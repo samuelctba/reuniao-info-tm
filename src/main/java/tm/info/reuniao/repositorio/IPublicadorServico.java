@@ -5,7 +5,7 @@ import tm.info.reuniao.model.Publicador;
 
 import java.util.List;
 
-public interface IPublicadorRepo extends MongoRepository<Publicador, String> {
+public interface IPublicadorServico extends MongoRepository<Publicador, String> {
 
     List<Publicador> findByPrimeiroNome(String primeiroNome);
     List<Publicador> findBySobreNome(String sobreNome);

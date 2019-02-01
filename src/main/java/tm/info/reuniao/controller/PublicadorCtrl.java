@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import tm.info.reuniao.model.Publicador;
-import tm.info.reuniao.repositorio.IPublicadorRepo;
+import tm.info.reuniao.repositorio.IPublicadorServico;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class PublicadorCtrl {
 
     @Autowired
-    private IPublicadorRepo repositorioPublicador;
+    private IPublicadorServico repositorioPublicador;
 
     //    @GetMapping("/{sobreNome}")
     @RequestMapping(value = "/{sobreNome}", method = RequestMethod.GET)
