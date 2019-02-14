@@ -1,18 +1,28 @@
 package tm.info.reuniao.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import tm.info.reuniao.config.ETipoAcesso;
 import tm.info.reuniao.model.Publicador;
 import tm.info.reuniao.model.Usuario;
 import tm.info.reuniao.repositorio.IPublicadorServico;
 import tm.info.reuniao.repositorio.IUsuarioServico;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class RestApiController {
@@ -22,6 +32,11 @@ public class RestApiController {
     
     @Autowired
 	private IUsuarioServico usuarioServico;
+    
+	@RequestMapping(value = "/perfil", method = RequestMethod.GET, produces = "application/json")
+	public ETipoAcesso[] mostrarPerfis() {
+		return ETipoAcesso.values();
+	}
     
 	@RequestMapping(value = "/user/", method = RequestMethod.GET)
 	public List<Usuario> mostrarUsuarios() {
