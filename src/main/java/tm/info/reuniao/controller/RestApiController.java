@@ -52,6 +52,7 @@ public class RestApiController {
     }
 
     @GetMapping("/api/publicadores")
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public List<Publicador> getAllPublicadores() {
         System.out.println("Buscar todos os Publicadores...");
 
