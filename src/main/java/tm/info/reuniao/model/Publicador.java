@@ -21,14 +21,12 @@ public class Publicador {
 
     @NotNull
     @Size(min=2, max=30)
-//    @Pattern(regexp = "^(.+)@(.+)$")
+    @Pattern(regexp = "^(.+)@(.+)$")
     @Email(message = "Email should be valid")
     private String email;
     @NotNull
-//    @Min(18)
-    private String primeiroNome;
-    @NotNull
-    private String sobreNome;
+    @Min(6)
+    private String nomeCompleto;
     @NotNull
     private String endereco;
     @NotNull
@@ -42,16 +40,19 @@ public class Publicador {
     private String outros;
     private String detalhes;
 
-    public Publicador(@NotNull @Size(min = 2, max = 30) @Email(message = "Email should be valid") String email, @NotNull String primeiroNome, @NotNull String sobreNome, @NotNull String endereco, @NotNull String telefone, @NotNull @Past LocalDate dataNascimento, @NotNull @Past LocalDate dataBatismo, String outros, String detalhes) {
+    public Publicador(@NotNull @Size(min = 2, max = 30) @Pattern(regexp = "^(.+)@(.+)$") @Email(message = "Email should be valid") String email, @NotNull @Min(6) String nomeCompleto, @NotNull String endereco, @NotNull String telefone, @NotNull @Past LocalDate dataNascimento, @NotNull @Past LocalDate dataBatismo, String outros, String detalhes) {
         this.email = email;
-        this.primeiroNome = primeiroNome;
-        this.sobreNome = sobreNome;
+        this.nomeCompleto = nomeCompleto;
         this.endereco = endereco;
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
         this.dataBatismo = dataBatismo;
         this.outros = outros;
         this.detalhes = detalhes;
+    }
+
+    public ObjectId get_id() {
+        return _id;
     }
 
     public String getEmail() {
@@ -62,20 +63,12 @@ public class Publicador {
         this.email = email;
     }
 
-    public String getPrimeiroNome() {
-        return primeiroNome;
+    public String getNomeCompleto() {
+        return nomeCompleto;
     }
 
-    public void setPrimeiroNome(String primeiroNome) {
-        this.primeiroNome = primeiroNome;
-    }
-
-    public String getSobreNome() {
-        return sobreNome;
-    }
-
-    public void setSobreNome(String sobreNome) {
-        this.sobreNome = sobreNome;
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
     }
 
     public String getEndereco() {
@@ -94,7 +87,7 @@ public class Publicador {
         this.telefone = telefone;
     }
 
-    public @NotNull @Past LocalDate getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
@@ -102,7 +95,7 @@ public class Publicador {
         this.dataNascimento = dataNascimento;
     }
 
-    public @NotNull @Past LocalDate getDataBatismo() {
+    public LocalDate getDataBatismo() {
         return dataBatismo;
     }
 
@@ -124,9 +117,5 @@ public class Publicador {
 
     public void setDetalhes(String detalhes) {
         this.detalhes = detalhes;
-    }
-
-    public ObjectId getId() {
-        return _id;
     }
 }

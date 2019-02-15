@@ -9,5 +9,6 @@ public enum ETipoAcesso {
         SERVO,
         PIONEIRO,
         SECRETARIO,
-        SERVICO
+        SERVICO,
+        D50
 }
