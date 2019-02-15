@@ -78,8 +78,7 @@ public class RestApiController {
         if(checkPublicadoor.isEmpty()) {
             Publicador _publicadores = publicadorServico.save(new Publicador(
                     publicador.getEmail(),
-                    publicador.getPrimeiroNome(),
-                    publicador.getSobreNome(),
+                    publicador.getNomeCompleto(),
                     publicador.getEndereco(),
                     publicador.getTelefone(),
                     publicador.getDataNascimento(),
@@ -88,7 +87,7 @@ public class RestApiController {
                     publicador.getDetalhes()));
 
 //            return _publicadores;
-            return new ResponseEntity<>("Publicador " + _publicadores.getId() + " foi criado com sucesso!!!", HttpStatus.OK);
+            return new ResponseEntity<>("Publicador " + _publicadores.get_id() + " foi criado com sucesso!!!", HttpStatus.OK);
         }
         else{
             System.out.println("Publicador com o mesmo Email ja existente! Crie novamente com email diferente!");
@@ -135,8 +134,7 @@ public class RestApiController {
             _publicador.setEmail(publicador.getEmail());
             _publicador.setEndereco(publicador.getEndereco());
             _publicador.setOutros(publicador.getOutros());
-            _publicador.setPrimeiroNome(publicador.getPrimeiroNome());
-            _publicador.setSobreNome(publicador.getSobreNome());
+            _publicador.setNomeCompleto(publicador.getNomeCompleto());
             _publicador.setTelefone(publicador.getTelefone());
             return new ResponseEntity<>(publicadorServico.save(_publicador), HttpStatus.OK);
         } else {
