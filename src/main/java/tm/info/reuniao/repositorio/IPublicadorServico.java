@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IPublicadorServico extends MongoRepository<Publicador, String> {
 
-    List<Publicador> findByPrimeiroNome(String primeiroNome);
-    List<Publicador> findBySobreNome(String sobreNome);
+    List<Publicador> findByNomeCompleto(String primeiroNome);
     List<Publicador> findByEmail(String email);
 }

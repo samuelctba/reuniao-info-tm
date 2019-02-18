@@ -47,15 +47,10 @@ public class RestApiController {
 	}
 
 
-    //    @GetMapping("/{sobreNome}")
-    @RequestMapping(value = "/api/{sobreNome}", method = RequestMethod.GET)
-    public List<Publicador> BuscaPublicador(@PathVariable String sobreNome) {
-        return publicadorServico.findBySobreNome(sobreNome);
-    }
-    //    @GetMapping("/{sobreNome}")
-    @RequestMapping(value = "/api/{primeiroNome}", method = RequestMethod.GET)
-    public List<Publicador> BuscaPublicadorPrimeiroNome(@PathVariable String primeiroNome) {
-        return publicadorServico.findByPrimeiroNome(primeiroNome);
+    //    @GetMapping("/{nomeCompleto}")
+    @RequestMapping(value = "/api/{nomeCompleto}", method = RequestMethod.GET)
+    public List<Publicador> BuscaPublicadorPrimeiroNome(@PathVariable String nomeCompleto) {
+        return publicadorServico.findByNomeCompleto(nomeCompleto);
     }
 
     @GetMapping("/api/publicadores")
