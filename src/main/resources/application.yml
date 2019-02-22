@@ -1,10 +1,25 @@
+spring:
+  profiles: dev
+server:
+  port: 8000
+---
+spring:
+  profiles: test
+server:
+  port: 9000
+
+  
+
+
+
+
 #spring.data.mongodb.host=127.0.0.1
-spring.data.mongodb.host=192.168.0.2
-spring.data.mongodb.port=27017
-spring.data.mongodb.authentication-database=reuniaoinfotm
+##spring.data.mongodb.host=192.168.0.2
+##spring.data.mongodb.port=27017
+##spring.data.mongodb.authentication-database=reuniaoinfotm
 #spring.data.mongodb.username=mongoJavaConn
 #spring.data.mongodb.password=mongoDB15347
-spring.data.mongodb.database=reuniaoinfotm
+##spring.data.mongodb.database=reuniaoinfotm
 #spring.data.mongodb.repositories.enabled=true
 
 #spring.data.mongodb.host=192.168.0.2
