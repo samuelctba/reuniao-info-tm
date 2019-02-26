@@ -35,6 +35,13 @@ public class RestApiController {
 		return usuarioServico.findAll();
 	}
 
+    @DeleteMapping("/user/deleteall")
+    public ResponseEntity<String> deleteAllUsuarios() {
+        System.out.println("Apagar todos os Usuarios...");
+        usuarioServico.deleteAll();
+        return new ResponseEntity<>("Todos os usuarios foram removidos do banco de dados com sucesso!", HttpStatus.OK);
+    }
+
 	@RequestMapping(value = "/user/", method = RequestMethod.POST)
 	// public Usuario cadastrarUsuario(@RequestBody Usuario newUser) {
 	public ResponseEntity<String> cadastrarUsuario(@RequestParam Usuario newUser) {
@@ -64,12 +71,14 @@ public class RestApiController {
         return publicadores;
     }
 
-    @PostMapping("/api/publicadores/create")
+    @PostMapping(value = "/api/publicadores/create",consumes = "application/json")
     public ResponseEntity<String> postPublicador(@RequestBody Publicador publicador) {
         System.out.println("Criando Publicador");
         System.out.println(publicador);
 
         List<Publicador> checkPublicadoor = publicadorServico.findByEmail(publicador.getEmail());
+        System.out.println("checando publicador existente:");
+        System.out.println(checkPublicadoor);
         if(checkPublicadoor.isEmpty()) {
             Publicador _publicadores = publicadorServico.save(new Publicador(
                     publicador.getEmail(),
@@ -80,6 +89,13 @@ public class RestApiController {
                     publicador.getDataBatismo(),
                     publicador.getOutros(),
                     publicador.getDetalhes()));
+
+//            String fullName= publicador.getNomeCompleto();
+//            String surName=fullName.split(" ")[fullName.split(" ").length-1];
+//            String firstName = fullName.substring(0, fullName.length() - surName.length());
+//            System.out.println(firstName );
+
+            cadastrarUsuario(new Usuario(publicador.getNomeCompleto().split(" ")[0], "campo", ETipoAcesso.PUBLICADOR));
 
 //            return _publicadores;
             return new ResponseEntity<>("Publicador " + _publicadores.get_id() + " foi criado com sucesso!!!", HttpStatus.OK);

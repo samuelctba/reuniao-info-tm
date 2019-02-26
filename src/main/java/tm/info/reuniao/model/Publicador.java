@@ -1,8 +1,10 @@
 package tm.info.reuniao.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -33,9 +35,13 @@ public class Publicador {
     private String telefone;
     @NotNull
     @Past
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat( pattern = "dd-MM-yyyy" )
     private LocalDate dataNascimento;
     @NotNull
     @Past
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat( pattern = "dd-MM-yyyy" )
     private LocalDate dataBatismo;
     private String outros;
     private String detalhes;

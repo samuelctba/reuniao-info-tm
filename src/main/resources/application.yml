@@ -4,10 +4,22 @@ server:
   port: 8000
 ---
 spring:
-  profiles: test
+  profiles: default
+spring.data.mongodb.uri: mongodb://mongoJavaConn:mongoDB15347@192.168.0.2:27017/reuniaoinfotm
 server:
   port: 9000
-
+---
+mongodb:
+  primary:
+    host: 127.0.0.1
+    port: 27017
+    database: reuniaoinfotm
+#    username:mongoJavaConn
+#    password:mongoDB15347
+  secondary:
+    host: 192.168.0.2
+    port: 27017
+    database: reuniaoinfotm
   
 
 
