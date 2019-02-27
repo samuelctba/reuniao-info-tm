@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import tm.info.reuniao.config.ETipoAcesso;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Document(collection = "usuario")
@@ -13,8 +14,10 @@ public class Usuario {
 	@Id
 	private ObjectId _id;
 	@NotNull
+	@NotEmpty(message="Usuario não pode ser vazio. Digite um email!")
 	private String usuario;
 	@NotNull
+	@NotEmpty(message="Password não pode ser vazio!")
 	private String password;
 
 	private ETipoAcesso perfil;

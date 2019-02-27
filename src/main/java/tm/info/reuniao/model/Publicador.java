@@ -21,32 +21,35 @@ public class Publicador {
 	@Id
     private ObjectId _id;
 
-    @NotNull
-    @Size(min=2, max=30)
+    @NotNull(message="Email não pode ser nulo!")
+    @Size(min=2, max=30, message = "Email tem que ter entre 2 e 30 caracteres")
     @Pattern(regexp = "^(.+)@(.+)$")
-    @Email(message = "Email should be valid")
+    @Email(message = "Email tem que ser Valido!")
     private String email;
-    @NotNull
-    @Min(6)
+    @Size(min=6)
+    @NotNull(message="Nome completo não pode ser nulo!")
+    @NotEmpty(message="Preencha nome completo")
     private String nomeCompleto;
-    @NotNull
+    @NotNull(message="Endereço não pode ser nulo!")
+    @NotEmpty(message="Preencha o endereço")
     private String endereco;
-    @NotNull
+    @NotNull(message="Telefone não pode ser nulo!")
+    @NotEmpty(message="Preencha telefone")
     private String telefone;
-    @NotNull
-    @Past
+    @NotNull(message="Data de Nascimento não pode ser nulo!")
+    @Past(message="Preencha data Formato dd-MM-yyyy que seja no passado.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat( pattern = "dd-MM-yyyy" )
+    @JsonFormat( pattern = "dd-MM-yyyy")
     private LocalDate dataNascimento;
-    @NotNull
-    @Past
+    @NotNull(message="Data de Batismo não pode ser nulo!")
+    @Past(message="Preencha data Formato dd-MM-yyyy que seja no passado.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat( pattern = "dd-MM-yyyy" )
     private LocalDate dataBatismo;
     private String outros;
     private String detalhes;
 
-    public Publicador(@NotNull @Size(min = 2, max = 30) @Pattern(regexp = "^(.+)@(.+)$") @Email(message = "Email should be valid") String email, @NotNull @Min(6) String nomeCompleto, @NotNull String endereco, @NotNull String telefone, @NotNull @Past LocalDate dataNascimento, @NotNull @Past LocalDate dataBatismo, String outros, String detalhes) {
+    public Publicador(@NotNull @Size(min = 2, max = 30) @Pattern(regexp = "^(.+)@(.+)$") @Email(message = "Email should be valid") String email, @NotNull @NotEmpty(message = "Preencha nome completo") @Min(6) String nomeCompleto, @NotNull @NotEmpty(message = "Preencha o endereço") String endereco, @NotNull @NotEmpty(message = "Preencha telefone") String telefone, @NotNull @Past(message = "Preencha data Formato dd-MM-yyyy que seja no passado.") LocalDate dataNascimento, @NotNull @Past(message = "Preencha data Formato dd-MM-yyyy que seja no passado.") LocalDate dataBatismo, String outros, String detalhes) {
         this.email = email;
         this.nomeCompleto = nomeCompleto;
         this.endereco = endereco;

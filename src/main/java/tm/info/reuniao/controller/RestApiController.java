@@ -3,13 +3,16 @@ package tm.info.reuniao.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import tm.info.reuniao.Response;
 import tm.info.reuniao.config.ETipoAcesso;
 import tm.info.reuniao.model.Publicador;
 import tm.info.reuniao.model.Usuario;
 import tm.info.reuniao.repositorio.IPublicadorServico;
 import tm.info.reuniao.repositorio.IUsuarioServico;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,12 +47,16 @@ public class RestApiController {
 
 	@RequestMapping(value = "/user/", method = RequestMethod.POST)
 	// public Usuario cadastrarUsuario(@RequestBody Usuario newUser) {
-	public ResponseEntity<String> cadastrarUsuario(@RequestParam Usuario newUser) {
-
+	public ResponseEntity<Response<Usuario>> cadastrarUsuario(@Valid @RequestParam Usuario newUser, BindingResult result) {
+        if(result.hasErrors()){
+            List<String> errors = new ArrayList<>();
+            result.getAllErrors().forEach((error)->errors.add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(new Response<>(errors));
+        }
 		Usuario _usuario = usuarioServico
 				.save(new Usuario(newUser.getUsuario(), newUser.getPassword(), newUser.getPerfil()));
 
-		return new ResponseEntity<>("Usuario " + _usuario.get_id() + " foi criado com sucesso!!!", HttpStatus.OK);
+		return ResponseEntity.ok(new Response<Usuario>(_usuario));
 
 	}
 
@@ -72,9 +79,15 @@ public class RestApiController {
     }
 
     @PostMapping(value = "/api/publicadores/create",consumes = "application/json")
-    public ResponseEntity<String> postPublicador(@RequestBody Publicador publicador) {
+    public ResponseEntity<Response<Object>> postPublicador(@Valid @RequestBody Publicador publicador, BindingResult result) {
         System.out.println("Criando Publicador");
         System.out.println(publicador);
+
+        if(result.hasErrors()){
+            List<String> errors = new ArrayList<>();
+            result.getAllErrors().forEach((error)->errors.add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(new Response<>(errors));
+        }
 
         List<Publicador> checkPublicadoor = publicadorServico.findByEmail(publicador.getEmail());
         System.out.println("checando publicador existente:");
@@ -95,14 +108,15 @@ public class RestApiController {
 //            String firstName = fullName.substring(0, fullName.length() - surName.length());
 //            System.out.println(firstName );
 
-            cadastrarUsuario(new Usuario(publicador.getNomeCompleto().split(" ")[0], "campo", ETipoAcesso.PUBLICADOR));
+            Usuario _user = usuarioServico
+                    .save(new Usuario(publicador.getNomeCompleto().split(" ")[0], "campo", ETipoAcesso.PUBLICADOR));
 
 //            return _publicadores;
-            return new ResponseEntity<>("Publicador " + _publicadores.get_id() + " foi criado com sucesso!!!", HttpStatus.OK);
+            return ResponseEntity.ok(new Response<>(_publicadores));
         }
         else{
-            System.out.println("Publicador com o mesmo Email ja existente! Crie novamente com email diferente!");
-            return new ResponseEntity<>("Publicador " + publicador.getEmail() + " com email existente!!!", HttpStatus.CONFLICT);
+            System.out.println("Publicador com o mesmo Email ja existente! Crie novamente com email diferente!"+publicador.getEmail() );
+            return new ResponseEntity("Publicador " + publicador.getEmail() + " com email existente!!!", HttpStatus.CONFLICT);
         }
 
 
@@ -132,8 +146,14 @@ public class RestApiController {
     }
 
     @PutMapping("/api/publicadores/{id}")
-    public ResponseEntity<Publicador> updatePublicador(@PathVariable("id") String id, @RequestBody Publicador publicador) {
+    public ResponseEntity<Response<Object>> updatePublicador(@Valid @PathVariable("id") String id, @RequestBody Publicador publicador, BindingResult result) {
         System.out.println("Atualizar Publicador com ID = " + id + "...");
+
+        if(result.hasErrors()){
+            List<String> errors = new ArrayList<>();
+            result.getAllErrors().forEach((error)->errors.add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(new Response<>(errors));
+        }
 
         Optional<Publicador> publicadorData = publicadorServico.findById(id);
 
@@ -147,7 +167,7 @@ public class RestApiController {
             _publicador.setOutros(publicador.getOutros());
             _publicador.setNomeCompleto(publicador.getNomeCompleto());
             _publicador.setTelefone(publicador.getTelefone());
-            return new ResponseEntity<>(publicadorServico.save(_publicador), HttpStatus.OK);
+            return new ResponseEntity(publicadorServico.save(_publicador), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
