@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Document(collection = "usuario")
+//@Entity(Name="usuario")
 public class Usuario {
 
 	@Id

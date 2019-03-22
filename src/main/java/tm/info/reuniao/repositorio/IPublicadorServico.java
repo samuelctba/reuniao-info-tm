@@ -9,4 +9,5 @@ public interface IPublicadorServico extends MongoRepository<Publicador, String> 
 
     List<Publicador> findByNomeCompleto(String primeiroNome);
     List<Publicador> findByEmail(String email);
+
 }

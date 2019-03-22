@@ -27,8 +27,7 @@ public class RestApiController {
     @Autowired
 	private IUsuarioServico usuarioServico;
 
-
-	@RequestMapping(value = "/perfil", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/perfil", method = RequestMethod.GET, produces = "application/json")
 	public ETipoAcesso[] mostrarPerfis() {
 		return ETipoAcesso.values();
 	}
@@ -42,6 +41,7 @@ public class RestApiController {
     public ResponseEntity<String> deleteAllUsuarios() {
         System.out.println("Apagar todos os Usuarios...");
         usuarioServico.deleteAll();
+
         return new ResponseEntity<>("Todos os usuarios foram removidos do banco de dados com sucesso!", HttpStatus.OK);
     }
 

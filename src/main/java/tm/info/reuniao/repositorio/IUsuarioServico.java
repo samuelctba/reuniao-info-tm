@@ -9,4 +9,5 @@ public interface IUsuarioServico extends MongoRepository<Usuario, String> {
 	
 	Usuario findByUsuario(String usuario);
 
+
 }
